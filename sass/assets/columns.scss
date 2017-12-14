@@ -1,0 +1,150 @@
+//!////////////
+// Flex Columns
+// -- Generates a flex based column layout. The columns are highly configable.
+// -- $class - string - The class name of the columns wraper.
+// -- $number - int - The number of columns.
+// -- $gutter - unit - The gutter space between columns.
+// -- $width - unit - Min width of a column.
+// -- $break - bool - Toggle for auto generated breakpoints.
+// -- $col - string - The class name of the column.
+
+@mixin _columns($class,$gutter,$number:12,$width:false,$break:true,$col:'col')
+{	
+	.#{$class}{
+	    display: -ms-flexbox;
+		display: flex;
+		
+		-ms-flex-flow: row wrap;
+		flex-flow: row wrap;
+		
+		flex-wrap: wrap;
+		
+		margin-top: -$gutter;
+		margin-left: -$gutter/2;
+		margin-right: -$gutter/2;
+		
+		$i: 0;
+		@while $i < $number
+		{
+			$i: $i + 1;
+			&.c_#{$i} > .#{$col}{width: percentage(1/$i)}
+		}
+		
+		> .clr{
+		    display: -ms-flexbox;
+			display: flex;
+			order: 2;
+		}
+		
+		.#{$col}{
+			position: relative;
+			
+			@if $width != false {min-width: $width}
+			
+			padding: 0 $gutter/2;
+			margin-top: $gutter;
+			
+			order: 2;
+			
+			&.right{margin-left: auto}
+			&.left{margin-right: auto}			
+			&.center{
+				margin-left: auto;
+				margin-right: auto;
+			}
+			
+			$i: 0;
+			$not: '';
+			@while $i < $number
+			{
+				$i: $i + 1;
+				
+				$w: percentage($i/$number);
+				$not: $not + ':not(.s_'+$i+')';
+				
+				&.s_#{$i}{width: $w}
+				&.o_#{$i}{margin-left: $w}
+			}
+			
+			&.full{
+				width: 100%;
+			}
+			
+			&.half{
+				width: 50%;
+			}
+			
+			&.no_grow{
+				width: auto;
+				flex-grow: 0;
+			}
+			
+			&.shrink{
+				flex-shrink: 1;
+			}
+			
+			&#{$not}:not(.no_grow),&.grow{
+				flex-grow: 1;
+			}
+		}
+	}
+	
+	@if($width != false and $break == true)
+	{
+		$i: 0;
+		@while $i < $number
+		{
+			$i: $i + 1;
+			
+			$max: floor($width * $i) + $gutter;	
+			$min: floor($width * ($i - 1)) + $gutter;
+			
+			$cols: floor($max / $min);
+			
+			@media only screen and (max-width:$max) and (min-width:$min)
+			{
+				.#{$class}{
+					$n: 0;
+					@while $n <= $number
+					{
+						$n: $n + 1;
+						$check: $min / $n;
+						
+						@if($width + $gutter > $check)
+						{
+							&.c_#{$n} > .#{$col}{width: percentage(1/($i - 1))}
+						}
+						
+						$a: 0;
+						@while $a < $number
+						{	
+							$a: $a + 1;
+							
+							$break_p: $a/$number;
+							$break_a: round($a * ($width + $gutter));
+							$break_b: round($break_p * $width);
+											
+							@if $break_a > $break_b 
+							{
+								$c: ceil($i/$a);
+								$p: percentage(1/$c);
+								
+								.#{$col}.s_#{$a}{width: $p}
+								
+								@if $c > 1
+								{
+									.#{$col}.o_#{$a}{margin-left: $p}
+								} @else {
+									.#{$col}.o_#{$a}{margin-left: 0}
+								}
+							}
+						}
+					}
+				}
+			}
+		}
+	}
+}
+
+// Generate Columns
+@include _columns('columns',$spacer_m,12,$width_min/12);

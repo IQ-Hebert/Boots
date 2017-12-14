@@ -1,0 +1,24 @@
+//!////////////////
+// Extemded Classes
+
+// Allows for an element to clear its self
+%clear{
+	*zoom: 1; // IE Fix	
+	
+	&:before, &:after{
+		content: '';
+		display: table;
+	}
+	&:after{clear: both}
+}
+
+// Basic flex comlumn setup
+%flex_cols{
+    display: -ms-flexbox;
+	display: flex;
+	
+	-ms-flex-flow: row wrap;
+	flex-flow: row wrap;
+	
+	flex-wrap: wrap;
+}

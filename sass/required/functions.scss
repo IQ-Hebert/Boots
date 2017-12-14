@@ -1,0 +1,24 @@
+//!/////////////////
+// Helper Functions
+// -- Boot's helper functions
+
+//!/////////////
+// Break Builder
+// -- Pass size and type to gennerate a media querry.
+
+@function _break_builder($size,$type)
+{
+	@if map-has-key($breaks,$size)
+	{
+		$size: map-get($breaks,$size);
+	}
+	
+	@if $type == 'min'
+	{
+		$type: 'min';
+	} @else {
+		$type: 'max';
+	}
+	
+	@return #{'('+$type+'-width: '+$size+')'};
+}

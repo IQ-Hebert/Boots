@@ -1,0 +1,32 @@
+//!//////
+// Mixins
+
+//!//////////
+// Breakpoint
+// -- Pass a size and min/max width variable to the _break mixin. Will use the function _break_builder to write the media querry for the breakpoint.
+
+@mixin _break($size:'phone',$type:'max',$_size:false,$_type:'min')
+{
+	$break: _break_builder($size,$type);
+	
+	@if $_size != false
+	{
+		$break: $break + ' and' _break_builder($_size,$_type);
+	}
+	
+	@media #{$break}
+	{
+		@content
+	}
+}
+
+//!///////////
+// Sans Mobile
+// -- Prevents the CSS from working if the body has the mobile class.
+
+@mixin _sans_mobile()
+{
+	body:not(.#{$mobile_class}){
+		@content;
+	}
+}

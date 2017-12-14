@@ -1,0 +1,31 @@
+//!//////////
+// Site Fonts
+
+// Font Weights
+
+$font_light: 300;
+$font_normal: 400;
+$font_medium: 500;
+$font_bold: 700;
+
+// Font Sizes
+
+$fs_xs: 1.1rem; // Extra Small
+$fs_s: 1.2rem; // Small
+$fs_n: 1.4rem; // Normal
+$fs_m: 2rem; // Medium
+$fs_l: 2.4rem; // Large
+$fs_xl: 2.8rem; // Extra Large
+$fs_xxl: 3.2rem; // Extra Extra Large
+
+// Line Heights
+
+$title_lh: 1.25; // Line height used in h1-h6
+$content_lh: 1.75; // Line height used in the content areas
+
+// Font Families
+
+@import url('https://fonts.googleapis.com/css?family=Roboto+Slab:300,400,700|Lato:300,400,700'); // Font importing
+
+$sans: 'Lato', Lato, sans-serif;
+$serif: 'Roboto Slab', Roboto Slab, serif;

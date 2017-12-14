@@ -1,0 +1,62 @@
+//!////////////
+// Boots Layout
+
+.layout{
+	@extend %flex_cols;
+	
+	.center,.side{
+		width: 90%;
+		flex-grow: 1;
+	}
+	
+	.center{
+		.inner{
+			min-width: $width_min;
+		}
+	}
+	
+	.side{
+		.inner{
+			min-width: $aside_min;
+		}
+	}
+}
+
+@include _break('tablet_l','min')
+{
+	.layout{	
+		margin-left: -$layout_left/2;
+		margin-right: -$layout_right/2;
+			
+		.center,.side{
+			padding-left: $layout_left/2;
+			padding-right: $layout_right/2;
+		}
+		
+		.center{
+			width: 30%;
+			order: 2;
+		}
+		
+		.side{
+			width: $aside_max;
+			
+			flex-grow: 0;
+			flex-shrink: 1;
+			
+			&.left{order: 1}	
+			&.right{order: 3}
+		}
+	}
+}
+
+.outer{
+	margin: 0 $layout_right 0 $layout_left;
+}
+
+.inner{
+	max-width: $width_max;
+	min-width: $width_min;
+	padding: $layout_top 0 $layout_bottom 0;
+	margin: 0 auto;
+}

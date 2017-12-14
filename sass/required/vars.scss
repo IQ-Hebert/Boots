@@ -1,0 +1,85 @@
+//!//////////////
+// Boot Variables
+// -- These should be edited to best suit your theme. Please add your own variables here to make editing easier for other developers.
+
+//!///////////
+// Site Colors
+
+$color_black: #000; // Black
+$color_white: #FFF; // White
+$color_grey:  #BBB; // Grey
+
+$color_valid: #389AD9; // Valid Status
+$color_error: #C70016; // Error Status
+$color_warning: #F29C2A; // Warning Status
+
+$color_primary: #88B04B; // Primary color
+$color_alt: #744bb0; // Complementary color
+
+// Background
+$background_dark: $color_black; // Dark
+$background_light: $color_white; // Light
+
+// Text
+$text_dark: $color_black; // Dark
+$text_light: #FFF; // Light
+
+//!////////////
+// Site Spacers
+// -- Default margin,padding and other gutter sizes.
+
+$spacer_s: 1.5rem; // Small
+$spacer_m: $spacer_s * 2; // Medium
+$spacer_l: $spacer_m * 2; // Large
+
+//!///////////
+// Site Widths
+
+$width_min: 60rem; // Min width
+$width_max: 130rem; // Max width
+
+$aside_min: 15rem; // Min side column width
+$aside_max: 30rem; // Max side column width
+
+//!///////////
+// Site Layout
+
+$layout_top: $spacer_m/2;
+$layout_bottom: $layout_top;
+$layout_left: $spacer_l;
+$layout_right: $layout_left;
+
+//!////////////////
+// Site Breakpoints
+// -- Default breakpoints used across the site.
+
+$breaks: (
+	'phone': 599px,
+	'tablet_p': 600px, // Portait
+	'tablet_l': 900px, // Landscape
+	'desktop': 1200px, // Default desktop
+	'desktop_l': 1800px // Insane desktop
+);
+
+//!///////////////////////
+// Site CSS3 Effect Config
+// -- Default settings for animations and transistions across the site.
+
+$transition_slow: 1.2s;
+$transition_normal: 0.3s;
+$transition_fast: 0.15s;
+
+$animation_slow: 1.2s;
+$animation_normal: 0.9s;
+$animation_fast: 0.6s;
+
+$easing: ease-in-out;
+
+//!////////////
+// Site Classes
+// -- Classes and prefixes used to change selectors.
+
+$mobile_class: 'mobile'; // Class for the body if site is on a mobile device
+$active_class: 'active'; // Class for active elements, links and other navigation elements
+$button_prefix: 'btn'; // Prefix to the button classes
+$icon_prefix: 'icon'; // Prefix to the icon classes
