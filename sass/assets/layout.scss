@@ -1,12 +1,40 @@
 //!////////////
 // Boots Layout
 
+// Basic
+.outer{
+	padding: 0 $layout_right 0 $layout_left;
+	float: none;
+	
+	&:not(.#{$dark_class}){
+		background: $background_light;
+		color: $text_dark;
+	}
+	
+	&.#{$dark_class}
+	{
+		background: $background_dark;
+		color: $text_light;
+	}
+}
+
+.inner{
+	max-width: $width_max;
+	min-width: $width_min;
+	padding: $layout_top 0 $layout_bottom 0;
+	margin: 0 auto;
+}
+
+// Sidebars
 .layout{
 	@extend %flex_cols;
+	
+	margin-top: -$spacer_m;
 	
 	.center,.side{
 		width: 90%;
 		flex-grow: 1;
+		margin-top: $spacer_m;
 	}
 	
 	.center{
@@ -27,14 +55,16 @@
 	.layout{	
 		margin-left: -$layout_left/2;
 		margin-right: -$layout_right/2;
+		margin-top: 0;
 			
 		.center,.side{
 			padding-left: $layout_left/2;
 			padding-right: $layout_right/2;
+			margin-top: 0;
 		}
 		
 		.center{
-			width: 30%;
+			width: $aside_max;
 			order: 2;
 		}
 		
@@ -50,13 +80,37 @@
 	}
 }
 
-.outer{
-	margin: 0 $layout_right 0 $layout_left;
-}
-
-.inner{
-	max-width: $width_max;
-	min-width: $width_min;
-	padding: $layout_top 0 $layout_bottom 0;
-	margin: 0 auto;
+//Split
+@include _break('tablet_l','min')
+{
+	.split{
+	    display: -ms-flexbox;
+		display: flex;
+		
+		-ms-flex-flow: row wrap;
+		flex-flow: row wrap;
+		
+		flex-wrap: wrap;
+		
+		> .outer{
+			width: 50%;
+			
+			&.left{
+			 	.inner{
+					max-width: $width_max/2 - $layout_right;
+					min-width: $width_min/2 - $layout_right;
+						
+					float: right;
+				}
+			}
+			&.right{
+				 .inner{
+					max-width: $width_max/2 - $layout_left;
+					min-width: $width_min/2 - $layout_left;
+						
+					float: left;
+				}
+			}
+		}
+	}
 }

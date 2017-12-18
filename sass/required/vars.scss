@@ -17,12 +17,12 @@ $color_primary: #88B04B; // Primary color
 $color_alt: #744bb0; // Complementary color
 
 // Background
-$background_dark: $color_black; // Dark
-$background_light: $color_white; // Light
+$background_dark: #3F3F3F; // Dark
+$background_light: #FAFAFA; // Light
 
 // Text
-$text_dark: $color_black; // Dark
-$text_light: #FFF; // Light
+$text_dark: $background_dark; // Dark
+$text_light: $background_light; // Light
 
 //!////////////
 // Site Spacers
@@ -44,7 +44,7 @@ $aside_max: 30rem; // Max side column width
 //!///////////
 // Site Layout
 
-$layout_top: $spacer_m/2;
+$layout_top: $spacer_m;
 $layout_bottom: $layout_top;
 $layout_left: $spacer_l;
 $layout_right: $layout_left;
@@ -79,7 +79,10 @@ $easing: ease-in-out;
 // Site Classes
 // -- Classes and prefixes used to change selectors.
 
-$mobile_class: 'mobile'; // Class for the body if site is on a mobile device
-$active_class: 'active'; // Class for active elements, links and other navigation elements
-$button_prefix: 'btn'; // Prefix to the button classes
-$icon_prefix: 'icon'; // Prefix to the icon classes
+$dark_class: 'dark'; // Class for dark content.
+$mobile_class: 'mobile'; // Class for the body if site is on a mobile device.
+$content_class: 'content'; // Class for the text content sections of the site.
+$active_class: 'active'; // Class for active elements, links and other navigation elements.
+$content_class: 'content'; // Class for content elements.
+$button_prefix: 'btn'; // Prefix to the button classes.
+$icon_prefix: 'icon'; // Prefix to the icon classes.

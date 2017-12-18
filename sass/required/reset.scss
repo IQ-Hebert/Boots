@@ -29,6 +29,7 @@ html{
 	font-weight: $font_normal;
 	line-height: $content_lh;
 	color: $color_black;
+	letter-spacing: $content_ls;
 	
 	text-rendering: auto;
 	
@@ -48,6 +49,7 @@ h1,h2,h3,h4,h5,h6{
 	line-height: $title_lh;
 	font-weight: $font_medium;
 	text-transform: uppercase;
+	letter-spacing: $title_ls;
 }
 h1{font-size: $fs_xxl}
 h2{font-size: $fs_xl}

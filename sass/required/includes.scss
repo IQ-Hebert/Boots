@@ -20,13 +20,37 @@
 	}
 }
 
-//!///////////
-// Sans Mobile
-// -- Prevents the CSS from working if the body has the mobile class.
+//!/////////////////
+// Simple Transtions
 
-@mixin _sans_mobile()
+@mixin _transtions($prop: all, $time: $transition_normal,$ease: $easing)
 {
-	body:not(.#{$mobile_class}){
-		@content;
+	transition: $prop $time $ease;	
+}
+
+//!////////////
+// Aspect Ratio
+
+@mixin _ar($selector: '*',$width: 1,$height: 1)
+{
+	position: relative;
+	width: 100%;
+	
+	> #{$selector}{
+		position: absolute;
+		left: 0;
+		top: 0;
+		width: 100%;
+		height: 100%;
+	}
+	
+	&:before{
+		content: '';
+		
+		display: block;
+		width: 100%;
+		height: auto;
+		
+		padding-top: #{$height / $width * 100 * 1%};
 	}
 }

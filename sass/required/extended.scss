@@ -22,3 +22,19 @@
 	
 	flex-wrap: wrap;
 }
+
+// A link with an underline
+%underline_link{
+	@include _transtions(background);
+	
+	background: linear-gradient(to right, $color_primary 0%, $color_primary 100%);
+	background-repeat: no-repeat;
+	background-position: center 102%;
+	background-size: 80% 1px;
+	
+	body:not(.#{$mobile_class}) &{
+		&:hover{
+			background-position: left 102%;
+		}
+	}
+}

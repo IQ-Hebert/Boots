@@ -18,3 +18,14 @@
 		margin-top: -1px;
 	}
 }
+
+.break{
+	background: $color_alt;
+	width: 100%;
+	height: 1px;
+	
+	border-bottom: $spacer_l solid $background_light;	
+	border-top: $spacer_l solid $background_light;
+	
+	box-sizing: content-box;
+}

@@ -11,17 +11,22 @@ $font_bold: 700;
 // Font Sizes
 
 $fs_xs: 1.1rem; // Extra Small
-$fs_s: 1.2rem; // Small
-$fs_n: 1.4rem; // Normal
-$fs_m: 2rem; // Medium
-$fs_l: 2.4rem; // Large
-$fs_xl: 2.8rem; // Extra Large
-$fs_xxl: 3.2rem; // Extra Extra Large
+$fs_s: 1.3rem; // Small
+$fs_n: 1.6rem; // Normal
+$fs_m: 2.4rem; // Medium
+$fs_l: 3rem; // Large
+$fs_xl: 3.6rem; // Extra Large
+$fs_xxl: 4.8rem; // Extra Extra Large
 
 // Line Heights
 
 $title_lh: 1.25; // Line height used in h1-h6
 $content_lh: 1.75; // Line height used in the content areas
+
+// Letter Spacing
+
+$title_ls: 0.1ch;
+$content_ls: 0.05ch;
 
 // Font Families
 
