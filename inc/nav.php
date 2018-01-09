@@ -3,12 +3,15 @@ $navigation = array
 (
 	'layouts' => array('default','sidebars','split'),	
 	'columns' => array('sizes','offsets','examples'),
-	'sections' => array('content','icons','forms','animations')
+	'sections' => array('content','icons','buttons','forms','animations'),
+	'utility' => array('images','height','sticky')
 );
 ?>
 
-<div class="outer sticky">
+<div id="navigation" class="outer sticky">
 	<nav class="inner">
+		<a href="#/" id="toggle" class="icon_hamburger"><i></i></a>
+		
 		<ul class="columns">
 			<?php foreach($navigation as $section => $links):?>
 			<li class="col s_2">

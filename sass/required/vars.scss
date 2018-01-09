@@ -36,7 +36,7 @@ $spacer_l: $spacer_m * 2; // Large
 // Site Widths
 
 $width_min: 60rem; // Min width
-$width_max: 130rem; // Max width
+$width_max: 110rem; // Max width
 
 $aside_min: 15rem; // Min side column width
 $aside_max: 30rem; // Max side column width
@@ -46,7 +46,7 @@ $aside_max: 30rem; // Max side column width
 
 $layout_top: $spacer_m;
 $layout_bottom: $layout_top;
-$layout_left: $spacer_l;
+$layout_left: $spacer_m;
 $layout_right: $layout_left;
 
 //!////////////////

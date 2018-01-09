@@ -1,5 +1,5 @@
-/*//////////
-*/// Content
+//!///////
+// Content
 
 .#{$content_class}{
 	width: 100%;
@@ -16,14 +16,14 @@
 		hyphens: auto;
 	}
 	
-	* + {
-		h1,h2,h3,h4,h5,h6{
-			margin-top: 1em;
-		}
-	}
-	
 	p,ul,ol,h1,h2,h3,h4,h5,h6,img,blockquote,dl,pre,address,noscript,[class^=#{$button_prefix}]{
 		margin: $spacer_s 0 0;
+	
+		& + {
+			h1,h2,h3,h4,h5,h6{
+				margin-top: $spacer_l;
+			}
+		}
 	}
 	
 	p,li,h1,h2,h3,h4,h5,h6{
@@ -45,7 +45,7 @@
 		margin-right: auto;
 	}
 	
-	a:not([class^=#{$button_prefix}]){
+	a:not([class^=#{$button_prefix}]):not([class^=#{$icon_prefix}]){
 		@extend %underline_link;
 	}
 	
@@ -67,7 +67,11 @@
 	
 	li{
 		display: list-item;
-		list-style-position: inside;
+		list-style-position: outside;
+		
+		li{
+			list-style-position: inside;
+		}
 		
 		> ul, > ol{
 			margin-top: 0;
@@ -80,6 +84,6 @@
 		height: 0;
 		
 		border-bottom: 1px solid;
-		margin: 0.5em 0;
+		margin: $spacer_l 0;
 	}
 }

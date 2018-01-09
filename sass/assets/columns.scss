@@ -8,8 +8,11 @@
 // -- $break - bool - Toggle for auto generated breakpoints.
 // -- $col - string - The class name of the column.
 
-@mixin _columns($class,$gutter,$number:12,$width:false,$break:true,$col:'col')
+@mixin _columns($class,$gutter,$number:12,$break:true,$col:'col')
 {	
+	$size: $width_max - $layout_left - $layout_right;
+	$width: $size/$number;
+	
 	.#{$class}{
 	    display: -ms-flexbox;
 		display: flex;
@@ -39,7 +42,7 @@
 		.#{$col}{
 			position: relative;
 			
-			@if $width != false {min-width: $width}
+			@if $width != false {min-width: $width;}
 			
 			padding: 0 $gutter/2;
 			margin-top: $gutter;
@@ -91,54 +94,44 @@
 	
 	@if($width != false and $break == true)
 	{
-		$i: 0;
+		$i: 0; // Loop 1 - Zero to column count
+		
 		@while $i < $number
 		{
 			$i: $i + 1;
 			
-			$max: floor($width * $i) + $gutter;	
-			$min: floor($width * ($i - 1)) + $gutter;
+			$max: floor($width * $i) + $layout_left + $layout_right;	
+			$min: floor($width * ($i - 1) * 1.00001) + $layout_left + $layout_right;	
 			
-			$cols: floor($max / $min);
+			@debug $max;
+					
+			$o: floor($number / $i); // Offset
+			$s: percentage($o / $number); // Offset Size
 			
 			@media only screen and (max-width:$max) and (min-width:$min)
 			{
-				.#{$class}{
-					$n: 0;
-					@while $n <= $number
-					{
-						$n: $n + 1;
-						$check: $min / $n;
-						
-						@if($width + $gutter > $check)
+				$n: 0; // Loop 2 - Zero to column count
+				
+				@while $n < $number
+				{
+					$n: $n + 1;
+					
+					$c: floor($n / $o);
+					@if($c < 1){$c: 1};
+					
+					$oc: $c - 1;
+					@if($oc < 1){$oc: 1};
+					
+					.#{$class} .#{$col}
+					{						
+						@if($n / $o > $i)
 						{
-							&.c_#{$n} > .#{$col}{width: percentage(1/($i - 1))}
+							&.s_#{$n}{width: 100%}
+						} @else {
+							&.s_#{$n}{width: $s * $c}				
 						}
 						
-						$a: 0;
-						@while $a < $number
-						{	
-							$a: $a + 1;
-							
-							$break_p: $a/$number;
-							$break_a: round($a * ($width + $gutter));
-							$break_b: round($break_p * $width);
-											
-							@if $break_a > $break_b 
-							{
-								$c: ceil($i/$a);
-								$p: percentage(1/$c);
-								
-								.#{$col}.s_#{$a}{width: $p}
-								
-								@if $c > 1
-								{
-									.#{$col}.o_#{$a}{margin-left: $p}
-								} @else {
-									.#{$col}.o_#{$a}{margin-left: 0}
-								}
-							}
-						}
+						&.o_#{$n}{margin-left: $s * $oc}	
 					}
 				}
 			}
@@ -147,4 +140,4 @@
 }
 
 // Generate Columns
-@include _columns('columns',$spacer_m,12,$width_min/12);
+@include _columns('columns',$spacer_m,12);

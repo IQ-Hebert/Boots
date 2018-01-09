@@ -28,6 +28,26 @@
 	transition: $prop $time $ease;	
 }
 
+//!//////////
+// Animations
+
+@mixin _animations($class)
+{
+	.#{$class}{
+		-webkit-animation-name: #{$class};
+		animation-name: #{$class};
+	}
+	
+	@-webkit-keyframes #{$class}
+	{
+	    @content;
+	}
+	@keyframes #{$class}
+	{
+	    @content;
+	}
+}
+
 //!////////////
 // Aspect Ratio
 

@@ -80,7 +80,7 @@
 				<div class="content bubble" data-i="<?php echo $i?>" data-n="<?php echo $n?>"><p><?php echo $size?></p></div>
 			</div>
 			<?php endfor;?>
-			<div class="clr"></div>
+			
 		<?php endfor;?>
 		</section>
 	</div>
