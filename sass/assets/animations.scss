@@ -1,0 +1,247 @@
+//!///////////////
+// CSS3 Animations
+
+// Fades
+@include _animations('fade_in')
+{
+	from{
+		opacity: 0;
+	}
+	to{
+		opacity: 1;
+	}
+}
+
+@include _animations('fade_out')
+{
+	from{
+		opacity: 1;
+	}
+	to{
+		opacity: 0;
+	}
+}
+
+// Scales	
+@include _animations('scale_in')
+{
+	from{
+		-webkit-transform: scale(0);
+		transform: scale(0);
+	}
+	to{
+		-webkit-transform: none;
+		transform: none;
+	}
+}
+
+@include _animations('scale_out')
+{
+	from{
+		-webkit-transform: none;
+		transform: none;
+	}
+	to{
+		-webkit-transform: scale(0);
+		transform: scale(0);
+	}
+}
+
+// Fade + Scales
+@include _animations('fade_scale_in')
+{
+	from{
+		-webkit-transform: scale(0);
+		transform: scale(0);
+		opacity: 0;
+	}
+	to{
+		-webkit-transform: none;
+		transform: none;
+		opacity: 1;
+	}
+}
+
+@include _animations('fade_scale_out')
+{
+	from{
+		-webkit-transform: none;
+		transform: none;
+		opacity: 1;
+	}
+	to{
+		-webkit-transform: scale(0);
+		transform: scale(0);
+		opacity: 0;
+	}
+}
+
+// Directional Animations
+$directions:
+(
+	left:(x:-100,y:0),
+	right:(x:100,y:0),
+	up:(x:0,y:100),
+	down:(x:0,y:-100),
+	left_up:(x:-100,y:100),
+	left_down:(x:-100,y:-100),
+	right_up:(x:100,y:100),
+	right_down:(x:100,y:-100)
+);
+
+$types:(scale,fade,slide);
+
+@each $direction, $config in $directions
+{	
+	$suffix: '_'+$direction;
+	
+	$x: map-get($config,x) + '%';
+	$y: map-get($config,y) + '%';
+	
+	$ox: (map-get($config,x) * -1) + '%';
+	$oy: (map-get($config,y) * -1) + '%';
+	
+	// Slide
+	$prefix: 'slide_';
+	
+	@include _animations($prefix+'in'+$suffix)
+	{
+		from{
+			-webkit-transform: translate3d(#{$x},#{$y},1px);
+			transform: translate3d(#{$x},#{$y},1px);
+		}
+		to{
+			-webkit-transform: none;
+			transform: none;
+		}
+	}
+	
+	@include _animations($prefix+'out'+$suffix)
+	{
+		from{
+			-webkit-transform: none;
+			transform: none;
+		}
+		to{
+			-webkit-transform: translate3d(#{$x},#{$oy},1px);
+			transform: translate3d(#{$x},#{$oy},1px);
+		}
+	}
+	
+	// Fades
+	$prefix: 'fade_';
+	
+	@include _animations($prefix+'in'+$suffix)
+	{
+		from{
+			-webkit-transform: translate3d(#{$x},#{$y},1px);
+			transform: translate3d(#{$x},#{$y},1px);
+			opacity: 0;
+		}
+		to{
+			-webkit-transform: none;
+			transform: none;
+			opacity: 1;
+		}
+	}
+	
+	@include _animations($prefix+'out'+$suffix)
+	{
+		from{
+			-webkit-transform: none;
+			transform: none;
+			opacity: 1;
+		}
+		to{
+			-webkit-transform: translate3d(#{$x},#{$oy},1px);
+			transform: translate3d(#{$x},#{$oy},1px);
+			opacity: 0;
+		}
+	}
+	
+	// Scale
+	$prefix: 'scale_';
+	
+	@include _animations($prefix+'in'+$suffix)
+	{
+		from{
+			-webkit-transform: translate3d(#{$x},#{$y},1px) scale(0);
+			transform: translate3d(#{$x},#{$y},1px) scale(0);
+		}
+		to{
+			-webkit-transform: none;
+			transform: none;
+		}
+	}
+	
+	@include _animations($prefix+'out'+$suffix)
+	{
+		from{
+			-webkit-transform: none;
+			transform: none;
+		}
+		to{
+			-webkit-transform: translate3d(#{$x},#{$oy},1px) scale(0);
+			transform: translate3d(#{$x},#{$oy},1px) scale(0);
+		}
+	}
+	
+	// Fade + Scale
+	$prefix: 'fade_scale_';
+	
+	@include _animations($prefix+'in'+$suffix)
+	{
+		from{
+			-webkit-transform: translate3d(#{$x},#{$y},1px) scale(0);
+			transform: translate3d(#{$x},#{$y},1px) scale(0);
+			opacity: 0;
+		}
+		to{
+			-webkit-transform: none;
+			transform: none;
+			opacity: 1;
+		}
+	}
+	
+	@include _animations($prefix+'out'+$suffix)
+	{
+		from{
+			-webkit-transform: none;
+			transform: none;
+			opacity: 1;
+		}
+		to{
+			-webkit-transform: translate3d(#{$x},#{$oy},1px) scale(0);
+			transform: translate3d(#{$x},#{$oy},1px) scale(0);
+			opacity: 0;
+		}
+	}
+}
+
+//!////////
+// Triggers
+
+.animate,.animate_loop,.animate_reverse,.scroll_efx{	
+	-webkit-animation-duration: $animation_normal;
+	animation-duration: $animation_normal;
+	
+	-webkit-animation-fill-mode: both;
+	animation-fill-mode: both;
+	
+	-webkit-animation-timing-function: $easing;
+	animation-timing-function: $easing;
+}
+
+.animate_loop{
+	-webkit-animation-iteration-count: infinite;
+	animation-iteration-count: infinite;	
+}
+
+.animate_reverse{
+	-webkit-animation-direction: reverse;
+	animation-direction: reverse;
+}
+
+.scroll_efx{
+	opacity: 0;
+}

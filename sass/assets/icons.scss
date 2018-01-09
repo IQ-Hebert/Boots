@@ -1,0 +1,217 @@
+/*////////////
+*/// CSS Icons
+$icon_thickness: 0.07em; // Stroke width of icons
+$icon_radius: 0.14em; // Rounded corners
+
+.#{$icon_prefix}_hamburger{ // Hamburger icon
+	position: relative;
+	
+	display: inline-table;
+	width: 2ch;
+	height: 1.5ex;
+		
+	&:before,i:before,i:after{
+		content: '';
+		
+		background: currentcolor;
+		
+		position: absolute;
+		display: table;
+		width: 100%;
+		height: $icon_thickness*2;
+		left: 0;
+		
+		border-radius: $icon_radius;
+	}
+	
+	&:before{
+		top: 50%;
+		margin-top: -$icon_thickness;
+		
+		transition-property: opacity;
+		transition-duration: 0s;
+		transition-timing-function: $easing;
+		transition-delay: $transition_normal;
+	
+	}
+	
+	i:before,i:after{
+		transition-duration: $transition_normal;
+		transition-timing-function: $easing;
+		transition-delay: $transition_normal, $transition_normal, 0s;
+	}
+	
+	i:before{
+		top: 0;
+		transition-property: top, margin, transform;
+	}
+	
+	i:after{
+		bottom: 0;
+		transition-property: bottom, margin, transform;
+	}
+	
+	&:active, &.#{$active_class}{
+		&:before{
+			opacity: 0;
+		}
+		
+		i{
+			&:before,&:after{
+				transition-delay: 0s, 0s, $transition_normal;
+			}
+		
+			&:before{
+				top: 50%;
+				margin-top: -$icon_thickness;
+				transform: rotate(45deg);
+			}
+			
+			&:after{
+				bottom: 50%;
+				margin-bottom: -$icon_thickness;
+				transform: rotate(-45deg);		
+			}
+		}
+	}
+}
+
+.#{$icon_prefix}_close,.#{$icon_prefix}_plus,.#{$icon_prefix}_minus,.#{$icon_prefix}_toggle{ // Close, Plus, Minus, Toggle
+	display: inline-block;
+	position: relative;
+	
+	width: 1ch;
+	height: 1.5ex;
+		
+	&:before,&:after{
+		content: '';
+		
+		background: currentcolor;
+		
+		display: table;
+		position: absolute;
+		width: 100%;
+		height: $icon_thickness;
+		
+		left: 50%;
+		top: 50%;
+		
+		border-radius: $icon_radius;
+		
+		transform-origin: center center;
+		transition: transform $transition_normal $easing;
+		
+		transform: translate3d(-50%,-50%,1px);
+		
+		box-sizing: border-box;
+	}
+}
+
+.#{$icon_prefix}_close{ // Plus icon	
+	i{
+		transform: rotate(45deg);
+	}
+	
+	&:before{
+		transform: translate3d(-50%,-50%,1px) rotate(45deg);
+	}
+	
+	&:after{
+		transform: translate3d(-50%,-50%,1px) rotate(-45deg);
+	}
+}
+
+.#{$icon_prefix}_plus{ // Plus icon
+	&:after{
+		transform: translate3d(-50%,-50%,1px) rotate(-90deg);
+	}
+}
+
+.#{$icon_prefix}_toggle{ // Toggle icon
+	&:after{
+		transform: translate3d(-50%,-50%,1px) rotate(90deg);
+	}
+	
+	&.#{$active_class}{
+		&:after{
+			transform: translate3d(-50%,-50%,1px) rotate(0deg);
+		}
+	}
+}
+
+.#{$icon_prefix}_arrow_left,.#{$icon_prefix}_arrow_right,.#{$icon_prefix}_arrow_up,.#{$icon_prefix}_arrow_down{ // Arrows
+	display: inline-block;
+	position: relative;
+	
+	width: 0.85ch;
+	height: 1.5ex;
+			
+	&:before,&:after{
+		content: '';
+		
+		background: currentcolor;
+		
+		display: table;
+		position: absolute;
+		width: 100%;
+		height: $icon_thickness;
+		
+		left: 50%;
+		top: 50%;
+		
+		border-radius: $icon_radius;
+		
+		transform-origin: center center;
+		transition: transform $transition_normal $easing;
+		
+		transform: translate3d(-50%,-50%,1px);
+		
+		box-sizing: border-box;
+	}
+}
+
+.#{$icon_prefix}_arrow_left{ // Arrow left icon
+	&:before,&:after{
+		transform-origin: right center;
+	}
+	&:before{
+		transform: translate3d(-50%,0%,1px) rotate(40deg) scaleX(0.65);
+	}
+	&:after{
+		transform: translate3d(-50%,0%,1px) rotate(-40deg) scaleX(0.65);
+	}
+}
+
+.#{$icon_prefix}_arrow_right{ // Arrow right icon
+	&:before,&:after{
+		transform-origin: left center;
+	}
+	&:before{
+		transform: translate3d(-50%,0%,1px) rotate(40deg) scaleX(0.65);
+	}
+	&:after{
+		transform: translate3d(-50%,0%,1px) rotate(-40deg) scaleX(0.65);
+	}
+}
+
+.#{$icon_prefix}_arrow_up{ // Arrow up icon
+	&:before{
+		transform-origin: right top;
+		transform: translate3d(-50%,0%,1px) rotate(40deg) scaleX(0.65);
+	}
+	&:after{
+		transform-origin: left top;
+		transform: translate3d(-50%,0%,1px) rotate(-40deg) scaleX(0.65);
+	}
+}
+
+.#{$icon_prefix}_arrow_down{ // Arrow down icon
+	&:before{
+		transform-origin: left bottom;
+		transform: translate3d(-50%,0%,1px) rotate(40deg) scaleX(0.65);
+	}
+	&:after{
+		transform-origin: right bottom;
+		transform: translate3d(-50%,0%,1px) rotate(-40deg) scaleX(0.65);
+	}
+}
