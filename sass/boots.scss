@@ -3,8 +3,9 @@
 //!////////
 // Required
 
+@import 'required/functions'; // Editable
 @import 'required/vars','required/fonts'; // Editable
-@import 'required/includes','required/extended','required/functions'; // Editable
+@import 'required/includes','required/extended'; // Editable
 @import 'required/reset'; // Non-editable
 
 //!///////

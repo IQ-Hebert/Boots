@@ -33,35 +33,18 @@
 					</code>
 				</li>
 			</ul>
-			
-			<div class="clr"></div>
-			
-			<div class="calc_height">
-				<div style="height: 40px">
-					<p>40px</p>
+		</div>
+	</div>
+		
+	<div class="inner">
+		<div class="columns">
+			<?php for($i = 1; $i <= 4; $i++):?>		
+			<div class="col s_3">	
+				<div class="content bubble calc_height">
+					<p style="height: <?php echo $i * 40;?>px"><?php echo $i * 40;?>px</p>
 				</div>
 			</div>
-			
-			<div class="calc_height">
-				<div style="height: 80px">
-					<p>80px</p>
-				</div>
-			</div>
-			
-			<div class="calc_height">
-				<div style="height: 160px">
-					<p>160px</p>
-				</div>
-			</div>
-	
-	
-			<div class="calc_height">
-				<div style="height: 320px">
-					<p>320px</p>
-				</div>
-			</div>
-			
-			<div class="clr"></div>
+			<?php endfor;?>
 		</div>
 	</div>
 </div>

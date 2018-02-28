@@ -28,18 +28,18 @@ $text_light: $background_light; // Light
 // Site Spacers
 // -- Default margin,padding and other gutter sizes.
 
-$spacer_s: 1.5rem; // Small
+$spacer_s: _rem(25px); // Small
 $spacer_m: $spacer_s * 2; // Medium
 $spacer_l: $spacer_m * 2; // Large
 
 //!///////////
 // Site Widths
 
-$width_min: 60rem; // Min width
-$width_max: 110rem; // Max width
+$width_min: _rem(600px); // Min width
+$width_max: _rem(1200px); // Max width
 
-$aside_min: 15rem; // Min side column width
-$aside_max: 30rem; // Max side column width
+$aside_min: _rem(250px); // Min side column width
+$aside_max: _rem(400px); // Max side column width
 
 //!///////////
 // Site Layout
@@ -54,11 +54,11 @@ $layout_right: $layout_left;
 // -- Default breakpoints used across the site.
 
 $breaks: (
-	'phone': 599px,
-	'tablet_p': 600px, // Portait
-	'tablet_l': 900px, // Landscape
-	'desktop': 1200px, // Default desktop
-	'desktop_l': 1800px // Insane desktop
+	'desktop_l': _rem(1800px), // Insane desktop
+	'desktop': _rem(1200px), // Default desktop
+	'tablet_l': _rem(900px), // Landscape
+	'tablet_p': _rem(600px), // Portait
+	//'phone': _rem(599px)
 );
 
 //!///////////////////////

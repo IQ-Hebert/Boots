@@ -12,7 +12,7 @@
 	<link href="css/boots.css?v=<?php echo urlencode(microtime())?>" rel="stylesheet">
 	
 	<style type="text/css">
-		.bubble,.calc_height{
+		.bubble{
 			position: relative;
 			padding: 20px 0 !important;
 			margin: 0 !important;			
@@ -24,7 +24,7 @@
 			z-index: 1;
 		}
 		
-		.bubble:before,.calc_height:before{
+		.bubble:before{
 			content: '';
 			
 			position: absolute;
@@ -45,35 +45,40 @@
 			margin: 0 auto !important;
 		}
 		
-		.calc_height{
-			display: table;
-			width: 25%;
-			height: auto;
-			padding: 0 !important;
-			margin-top: 1.5em !important;
-			
-			float: left;
-		}
-		
-		.calc_height > div{
-			display: table-cell;
-			vertical-align: middle;
-			text-align: center;
-		}
-		
-		#navigation{
-			background: none;
-			display: none;
-		}
-		
 		#toggle{
 			font-size: 3rem;
 		}
 		
 		.transition{			
 			transition-property: width,height,left,top;
-			transition-duration: 1s;
+			transition-duration: .66s;
 			transition-timing-function: ease-in-out;
+		}
+		
+		.se .col{
+			opacity: 0;
+		}
+		
+		#navigation{
+			margin-top: 0;
+			margin-bottom: 0;
+		}
+		
+		#navigation .inner{
+			padding-top: 0;
+			padding-bottom: 0;
+		}
+		
+		#navigation #toggle{
+			padding: 50px 0 0;
+		}
+		
+		#navigation .icon_hamburger{
+			display: table;
+		}
+		
+		#navigation .columns{
+			display: none;
 		}
 	</style>
 </head>
@@ -104,11 +109,13 @@
 <script>
 	if(window.mobile) $('body').addClass('mobile');
 	
-	$('.sticky').sticky_postion();
+	$('.sticky').sticky_postion({level:3});
+	
 	$('img').dynamic_images();
 	$('.calc_height').equalize_height();
 	
 	$('.gt').grid_transition();
+	$('.se .col').scroll_transition('fade_in_up');
 	
 	$('[animation]').each(function()
 	{
@@ -128,6 +135,7 @@
 		});				
 	});
 	
+	$('.a_fs').auto_fs();
 </script>
 
 </body>

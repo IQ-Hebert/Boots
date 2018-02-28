@@ -5,31 +5,10 @@
 	width: 100%;
 	height: 100%;
 	
-	font-size: $fs_n;
-	line-height: $content_lh;
-	
-	margin-top: -$spacer_s;
+	@include _gr();
 	
 	h1,h2,h3,h4,h5,h6{
-		line-height: $title_lh;
-		word-break: break-all;
 		hyphens: auto;
-	}
-	
-	p,ul,ol,h1,h2,h3,h4,h5,h6,img,blockquote,dl,pre,address,noscript,[class^=#{$button_prefix}]{
-		margin: $spacer_s 0 0;
-	
-		& + {
-			h1,h2,h3,h4,h5,h6{
-				margin-top: $spacer_l;
-			}
-		}
-	}
-	
-	p,li,h1,h2,h3,h4,h5,h6{
-		[class^=#{$button_prefix}]{
-			margin: 0;
-		}
 	}
 	
 	p,li{
@@ -43,6 +22,14 @@
 		max-width: 100%;
 		margin-left: auto;
 		margin-right: auto;
+		
+		&.left{
+			margin-left: 0;
+		}
+		
+		&.right{
+			margin-right: 0;
+		}
 	}
 	
 	a:not([class^=#{$button_prefix}]):not([class^=#{$icon_prefix}]){
@@ -84,6 +71,19 @@
 		height: 0;
 		
 		border-bottom: 1px solid;
-		margin: $spacer_l 0;
+		margin: 2.5em 0;
+	}
+}
+
+@each $name, $size in $breaks
+{
+	@if $width_max > $size
+	{
+		@include _break($name)
+		{
+			.content{
+				@include _gr($size);
+			}
+		}
 	}
 }

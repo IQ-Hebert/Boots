@@ -4,10 +4,14 @@
 	// Global Variables
 	
 	var scroll, resize = false; // Booleans
+	
 	var scroll_actions = Array(), // On scroll events
 		resize_actions = Array(), // On resize events
 		frame_actions  = Array(), // On animation frame events
 		event_actions  = Array(); // On event events
+		
+	var _scroll_frame_delay = 2,  // How many frames to skip before rendering scroll events
+		_resize_frame_delay = 2;  // How many frames to skip before rendering resize events
 		
 	boots = this;
 	
@@ -36,20 +40,55 @@
 	
 	var _scroll = function()
 	{
-		scroll = true;
+		if(!scroll) 
+		{
+			scroll = _scroll_frame_delay;
+			requestAnimFrame(_scroll_actions);
+		} else {
+			scroll = _scroll_frame_delay;
+		}
+	},
+	_scroll_actions = function()
+	{	
+		if(scroll === 0)
+		{
+			for(i = 0; i < scroll_actions.length; i++) scroll_actions[i](); // Scroll events	
+			scroll = false;
+		} else
+		if(scroll !== false)
+		{
+			scroll -= 1;
+			requestAnimFrame(_scroll_actions);
+		}
 	},
 	_resize = function()
 	{
-		resize = true;	
+		if(!resize) 
+		{
+			resize = _resize_frame_delay;
+			requestAnimFrame(_resize_actions);
+		} else {
+			resize = _scroll_frame_delay;
+		}
+	},
+	_resize_actions = function()
+	{
+		if(resize === 0)
+		{
+			for(i = 0; i < resize_actions.length; i++) resize_actions[i](); // Scroll events	
+			resize = false;
+		} else
+		if(resize !== false)
+		{
+			resize -= 1;
+			requestAnimFrame(_resize_actions);
+		}
 	},
 	_frame = function()
-	{
+	{		
 		// Ties window scroll and resize events into the requestAnimationFrame to prevent multi layering events
 	
 		var i;
-		
-		if(resize) for(i = 0; i < resize_actions.length; i++) resize_actions[i](); // Resie events 
-		if(scroll) for(i = 0; i < scroll_actions.length; i++) scroll_actions[i](); // Scroll events
 		for(i = 0; i < frame_actions.length; i++) frame_actions[i](); // Animation Frame events
 		
 		for(i = 0; i < event_actions.length; i++)
@@ -59,9 +98,6 @@
 			
 			i--;
 		}
-				
-		scroll = false;
-		resize = false;
 		
 		requestAnimFrame(_frame);
 	};
@@ -186,6 +222,8 @@
 	{
 		// Gets the width, height x and y postion of an element
 		
+		$(this).height();
+		
         var rect = $(this)[0].getBoundingClientRect(),
             pos = $(this).position();
         
@@ -200,9 +238,9 @@
 		// Returns the first scrollable element of a child
 		
 		var node = $(this)[0];
-		
-		if(node === null || node.nodeName == ('BODY' || 'HTML')) return false;
-		if(node.scrollHeight > node.clientHeight) return node;
+				
+		if(node === false || node.nodeName == ('BODY' || 'HTML')) return window;
+		if($(node).css('position') != 'static' && node.scrollHeight > node.clientHeight) return node;
 				
 		return $(node.parentNode).bb_scroll_node();
 	}
@@ -409,7 +447,7 @@
 		// options - bool - Check if a placeholder should be added after target elements.
 		// options - object - Merges the defaults and passed options objects.
 		
-		var defaults = {class:'sticky',placeholder:true};
+		var defaults = {class:'sticky',placeholder:true,level:1};
 									
 		switch(typeof options)
 		{
@@ -440,33 +478,138 @@
 		
 		o.scoller = $(e).bb_scroll_node();
 		
-		$(e).css({position:'absolute'});
-				
-		if(o.placeholder) $().bb_resize(size_sticky.bind(e,o));
+		$().bb_resize(size_sticky.bind(e,o));
+		$().bb_resize(do_sticky.bind(e,o));
 		
 		if(!o.scoller)
 		{
 			$().bb_scroll(do_sticky.bind(e,o));
 		} else {
-			$(o.scoller).bb_event('scroll',do_sticky.bind(e,o));
+			$(o.scoller).on('scroll',do_sticky.bind(e,o));
 		}
 	}
 	
 	var size_sticky = function(o)
 	{
-		var pos = $(this).bb_pos();
-		$(o.placeholder).css({'width':pos.w,'height':pos.h});
+		this.style.position = null;
+		this.style.top = null;
+		this.style.left = null;
+		this.style.margin = null;
+		
+		var parent = $(this),
+			pos_a = parent.bb_pos(),
+			pos_b = false,
+			offset = (o.scoller ? (o.scoller.scrollTop || o.scoller.scrollY || 0):0);
+			
+		for(var i = 0; i < o.level; i++)
+		{
+			parent = parent.parent();
+			pos_a = parent.bb_pos();			 
+		}
+		
+		o.pos = $(this).bb_pos();
+		o.offset = pos_a.y - o.pos.y;
+		
+		o.start = o.pos.y + offset; // Start Postion
+		o.end = pos_a.y + pos_a.h - o.pos.h + offset; // End Postion
+		
+		if(o.placeholder) $(o.placeholder).css({'width':o.pos.w,'height':o.pos.h});
 	},	
 	do_sticky = function(o)
 	{
-		var pos_e = $(this).bb_pos(),
-			pos_p = $(this).parent().bb_pos(),
-			offset = o.scoller ? o.scoller.scrollTop:0,
-			top = (pos_p.h + pos_p.y) > pos_e.h ? offset:pos_p.h-pos_e.h,
-			fixed = (pos_p.y < 0 && (pos_p.h + pos_p.y) > pos_e.h && offset == 0);
-	
-		$(this).css({position:fixed ? 'fixed':'absolute',top:top});
+		console.log('scroll');
+		
+		var pos = $(this).parent().bb_pos(),
+			fixed = o.offset >= pos.y,
+			top = fixed ? 0:o.start;	
+				
+		if(o.end + pos.y < 0)
+		{
+			fixed = false;
+			top = o.end;
+		
+			console.log('end');
+		}
+		
+		$(this).css({position:fixed ? 'fixed':'absolute',top:top,left:o.pos.x,margin:0});
 	};
+	
+	$.fn.auto_fs = function(options)
+	{ 
+		// Sets the font size of a text element to fill parent containers width.
+		// options - string - Class applied to elements while calcuating their size.
+		// options - number - Max font size of the elements.
+		// options - object - Merges the defaults and passed options objects.
+		
+		var defaults = {calc: 'calc_fs',max: false,min: false,lines: false,adjust: 9},
+			elements = this;
+		
+		switch(typeof options)
+		{
+			case 'object':
+				defaults = $.extend(defaults, options);
+			break;
+			case 'string':
+				defaults.calc = options;
+			break;
+			case 'number':
+				defaults.max = options;
+			break;
+		}
+		
+		elements.each(function(i)
+		{
+			$().bb_resize(do_auto_fs.bind(this,$.extend({},defaults)));
+		});
+		
+		return this;	
+	};
+	
+	var do_auto_fs = function(c)
+	{		
+		if(!c.min) c.min = parseInt($(this).css('fontSize'));
+		
+		$(this).addClass(c.calc).css({'font-size':c.min});
+		
+		var check = true,
+			s = c.min,
+			l = (c.lines ? c.lines:$(this).find('br').length+1),
+			lh = parseInt($(this).css('line-height')) / s,
+			w = $(this).parent().bb_pos().w,
+			p = false;
+		
+		while(check)
+		{
+			p = $(this).bb_pos();
+			
+			if((c.max && s >= c.max) || (p.h > (lh * l * s) + 1) || (p.w > w))
+			{
+				check = false;
+			} else {
+				s += c.adjust;
+				$(this).css({'font-size':s});
+			}
+		}
+		
+		check = false;
+		s = (s - c.adjust < c.min ? c.min:s-c.adjust);
+		
+		while(check)
+		{
+			p = $(this).bb_pos();
+			
+			if((c.max && s >= c.max) || (p.h > (lh * l * s) + 1) || (p.w > w))
+			{
+				check = false;
+			} else {
+				s += 1;
+				$(this).css({'font-size':s});
+			}
+		}
+		
+		if(s > c.min) s -= 1;		
+		$(this).removeClass(c.calc).css({'font-size':s});
+	}
 	
 	//!////////////////
 	// Effect Functions
@@ -538,6 +681,71 @@
 		{
 			$(this).addClass(o.class).height();
 			$(this).css({'top':o.destinations[i].y - pos.y,'left':o.destinations[i].x - pos.x,'height':o.destinations[i].h,'width':o.destinations[i].w});
+		});
+	};
+		
+	$.fn.scroll_transition = function(options)
+	{ 
+		// efx_scroll - Triggers a class when element/elements are in frame
+		// pass optional variable options as string, the animation class
+		// pass optional variable options as object, the config for the effect
+		// object values
+		// class - effect class
+		// offset - offset from the scroll
+		// reset - when to reset the scroll effect (before,after,both,none)
+		// direction - scroll direction to trigger the effect (vertical,horizontal)
+		// animation - animation class
+		
+		var defaults = {class: 'animate',offset:0, reset:'both', direction:'vertical', animation:''};
+		
+		switch(typeof options)
+		{
+			case 'object':
+				defaults = extend(defaults, options);
+			break;
+			case 'string':
+				defaults.animation = options;
+			break;
+			default:
+				return false;
+			break;
+		}
+		
+		$(this).addClass(defaults.class);
+		
+		$().bb_scroll(prep_scroll_transition.bind(this,defaults));
+		
+		return this;
+	}
+	
+	var prep_scroll_transition = function(c) // Triggers page scroll effects
+	{
+		var w = window.innerWidth, // Window width
+			h = window.innerHeight; // Window height
+		
+		$(this).each(function()
+		{
+			var add = false, // Bool to add animation class
+				remove = false, // Bool to remove animation class
+				pos = $(this).bb_pos(); // The x and y postion
+			
+			if((c.direction == 'vertical' && pos.y <= h) || (c.direction == 'horizontal' && pos.x + pos.w >= -1 && pos.x - w <= pos.w)) add = true;
+						
+			switch(c.reset)
+			{
+				case 'before':
+					if((c.direction == 'vertical' && pos.y + pos.h < -1) || (c.direction == 'horizontal' && pos.x + pos.w < -1)) remove = true;	
+					break;
+				case 'after':
+					if((c.direction == 'vertical' && pos.y > h) || (c.direction == 'horizontal' &&  pos.x > w)) remove = true;
+					break;
+				case 'both':
+					if((c.direction == 'vertical' && (pos.y + pos.h < -1 || pos.y > h)) || (c.direction == 'horizontal' && (pos.x + pos.w < -1 || pos.x > w))) remove = true;
+					break;
+			}
+				
+			if(add && !remove) $(this).addClass(c.animation);
+			if(remove) $(this).removeClass(c.animation);
 		});
 	};
 	

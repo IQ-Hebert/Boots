@@ -33,6 +33,7 @@
 					</code>
 				</li>
 			</ul>
+			<?php /*
 			
 			<div class="bubble">
 				<div style="height: 200px; overflow: auto;">
@@ -42,6 +43,7 @@
 					</div>
 				</div>
 			</div>
+			*/?>
 		</div>
 	</div>
 </div>

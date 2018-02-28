@@ -74,3 +74,62 @@
 		padding-top: #{$height / $width * 100 * 1%};
 	}
 }
+
+//!//////////
+// Gold Ratio
+// -- Pass a width to calc ratio
+
+@mixin _gr($width: $width_max)
+{
+	$ratio: 1.61803398874989;
+	$square: _sqrt($width - $layout_left - $layout_right);
+	$size: _rem(round($square / $ratio * 0.98px) + 2px);
+	$line: _rem(round($square * 0.98px) + 2px);
+	
+	font-size: $size;
+	line-height: $line;
+	
+	margin-top: -$line;
+	
+	h1{
+		font-size: ($size * 4.236);
+		line-height: ($line * 4.236);
+	}
+	
+	h2{
+		font-size: ($size * 2.618);
+		line-height: ($line * 2.618);
+	}
+	
+	h3{
+		font-size: ($size * 1.618);
+		line-height: ($line * 1.618);
+	}
+	
+	p,ul,ol,h1,h2,h3,h4,h5,h6,img,blockquote,dl,pre,address,noscript,[class^=#{$button_prefix}]{
+		margin-top: $line;
+	
+		& + {
+			h1,h2,h3,h4,h5,h6{
+				margin-top: $line*2.5;
+			}
+		}
+	}
+	
+	p,li,h1,h2,h3,h4,h5,h6{
+		[class^=#{$button_prefix}]{
+			margin: 0;
+		}
+	}
+}
+
+@mixin _gr_form($width: $width_max)
+{
+	$ratio: 1.61803398874989;
+	$square: _sqrt($width - $layout_left - $layout_right);
+	$size: _rem(round($square / $ratio * 0.98px) + 2px);
+	$line: _rem(round($square * 0.98px) + 2px);
+	
+	font-size: $size;
+	line-height: $line;
+}

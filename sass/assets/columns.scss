@@ -103,7 +103,7 @@
 			$max: floor($width * $i) + $layout_left + $layout_right;	
 			$min: floor($width * ($i - 1) * 1.00001) + $layout_left + $layout_right;	
 			
-			@debug $max;
+			@debug _strip($max * 16 * 1px);
 					
 			$o: floor($number / $i); // Offset
 			$s: percentage($o / $number); // Offset Size
@@ -116,7 +116,7 @@
 				{
 					$n: $n + 1;
 					
-					$c: floor($n / $o);
+					$c: round($n / $o);
 					@if($c < 1){$c: 1};
 					
 					$oc: $c - 1;
@@ -140,4 +140,4 @@
 }
 
 // Generate Columns
-@include _columns('columns',$spacer_m,12);
+@include _columns('columns',$spacer_s);

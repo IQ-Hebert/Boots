@@ -6,7 +6,7 @@ $form_padding: 0.5em;
 
 // Reset
 form{
-	font-size: $fs_n;
+	@include _gr_form();
 }
 
 input,select,textarea,label,button{
@@ -215,6 +215,19 @@ input[type='radio']{
 		&:before{
 			background: $color_primary;
 			transform: scale(0.7) translate3d(0,0,1px);
+		}
+	}
+}
+
+@each $name, $size in $breaks
+{
+	@if $width_max > $size
+	{
+		@include _break($name)
+		{
+			form{
+				@include _gr_form($size);
+			}
 		}
 	}
 }

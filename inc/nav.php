@@ -8,9 +8,12 @@ $navigation = array
 );
 ?>
 
-<div id="navigation" class="outer sticky">
+<div id="navigation" class="outer">
 	<nav class="inner">
-		<a href="#/" id="toggle" class="icon_hamburger"><i></i></a>
+		
+		<div id="toggle" class="sticky">
+			<a href="#/" class="icon_hamburger"><i></i></a>
+		</div>
 		
 		<ul class="columns">
 			<?php foreach($navigation as $section => $links):?>

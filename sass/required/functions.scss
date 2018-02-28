@@ -22,3 +22,47 @@
 	
 	@return #{'('+$type+'-width: '+$size+')'};
 }
+
+//!/////
+// Strip
+// -- Pass varabile to get the number without postfix
+
+@function _strip($var)
+{
+	@if type-of($var) == 'number' and not unitless($var)
+	{
+		@return $var / ($var * 0 + 1);
+	}
+	
+	@return $var;
+}
+
+//!///////////
+// Square Root
+// -- Pass number to get its root
+
+@function _sqrt($num)
+{
+	$num: _strip($num) * 16;
+	$x0: 1;
+	$x1: $x0;
+	
+	@for $i from 1 through 10
+	{
+		$x1: $x0 - ($x0 * $x0 - abs($num)) / (2 * $x0);
+		$x0: $x1;
+	}
+	
+	@return $x1;
+}
+
+//!/////////
+// PX -> Rem
+// Pass PX value to get the rem value
+
+@function _rem($px)
+{
+	$rem: $px / 16px;
+	
+	@return $rem * 1rem;
+}
